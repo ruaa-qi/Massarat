@@ -25,7 +25,7 @@ namespace Massarat.Models
 		[ForeignKey("Id")]
 		public virtual University? University { get; set; }
 
-		public String Salary { get; set; }
+		public String Salary { get; set; } = null!;
 	}
 	
 }

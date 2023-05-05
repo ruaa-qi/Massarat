@@ -8,15 +8,15 @@ namespace Massarat.Models
 		public int Id { get; set; }
 
 		[Required]
-		public String Name { get; set; }
+		public String Name { get; set; } = null!;
 
         public Boolean? Gender { get; set; }
         public int? Age { get; set; }
 
 		[Required]
-		public String PhoneNumber { get; set; }
+		public String PhoneNumber { get; set; } = null!;
 
 
 
-    }
+	}
 }

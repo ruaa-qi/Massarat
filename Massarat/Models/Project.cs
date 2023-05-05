@@ -8,16 +8,16 @@ namespace Massarat.Models
         [Key]
         public int Id { get; set; }
         [Required]
-        public String Name { get; set; }
-		
-		public String Description { get; set; }
+        public String Name { get; set; } = null!;
 
-        [Required]
+		public String Description { get; set; } = null!;
+
+		[Required]
 		public virtual int MentorId { get; set; }
 		[ForeignKey("Id")]
 		public virtual Mentor? Mentor { get; set; }
 
-		public String Industry { get; set; }
+		public String Industry { get; set; } = null!;
 		[Required]
 		public int TeamNumber { get; set; }
 	}
