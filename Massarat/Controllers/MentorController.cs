@@ -36,8 +36,18 @@ namespace Massarat.Controllers
 		{
 			if (MentorId == null)
 				return NoContent();
-			return Ok(_context.Mentor.Where(m => m.Id == MentorId).FirstOrDefault());
+			var MentorInfo = _context.Mentor.Where(m => m.Id == MentorId).FirstOrDefault();
+			var MentorDTO = new MentorDTO
+			{
+				Name = MentorInfo.Name,
+				Age = MentorInfo.Age,
+				PhoneNumber = MentorInfo.PhoneNumber
+			};
+			return Ok(MentorDTO);
 		}
+		
+
+
 		[HttpGet]
 		[Route("api/[Controller]/[Action]")]
 		public IActionResult GetStudentByName(String? Name)
@@ -49,8 +59,47 @@ namespace Massarat.Controllers
 			return Ok(StudentName);
 			return BadRequest(); 
 
-
-	
 		}
+
+		[HttpPost]
+		[Route("api/[Controller]/[Action]")]
+		public IActionResult CreateMentor(MentorDTO mentorDTO)
+		{
+			if (mentorDTO == null)
+				return NoContent();
+		
+			var Mentor = new Mentor
+			{
+				Name = mentorDTO.Name ?? "AlternativeName",
+				Age = mentorDTO.Age ?? -1,
+				PhoneNumber = mentorDTO.PhoneNumber == null ? "No phone" : mentorDTO.PhoneNumber,
+				CreateDate = DateTime.Now,
+				CreateBy = "Ruaa Mohammed",
+				Status = true,
+				Gender = mentorDTO.Gender ?? false,
+			};
+			_context.Mentor.Add(Mentor);
+			_context.SaveChanges();
+			return Ok();
+		}
+		[HttpGet]	
+		[Route("api/[Controller]/[Action]")]
+
+		public List<MentorDTO> GetMentorsByAge(int? age)
+		{
+			var MentorsByAge = _context.Mentor.Where(a=>a.Age == age).ToList();
+			List<MentorDTO> mentorListMentor =new List<MentorDTO>();
+			foreach(var Mentor in MentorsByAge)
+			{
+				var Object = new MentorDTO()
+				{
+                  Name = Mentor.Name,
+                  Age = Mentor.Age,
+				};
+				mentorListMentor.Add(Object);
+			}
+			
+			return mentorListMentor;
+		} 
 	}
 }
